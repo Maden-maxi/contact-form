@@ -1,0 +1,210 @@
+<div ng-controller="ContactList" layout="column" layout-padding ng-cloak>
+
+    <md-content>
+
+        <div class="md-no-momentum">
+
+            <div layout="row" layout-xs="column">
+
+                <div class="form-wrapper round" flex>
+
+                    <md-toolbar class="md-hue-2">
+                        <div class="md-toolbar-tools">
+                            <md-button class="md-fab md-warn">
+                                <i class="material-icons vertical-align">contacts</i>
+                            </md-button>
+                            <h2>
+                                <span>Контактная форма</span>
+                            </h2>
+                            <span flex></span>
+                            <md-button class="md-fab md-warn">
+                                <!--Подсказка-->
+                                <i class="material-icons vertical-align">help_outline</i>
+                                <md-tooltip md-direction="bottom">
+                                    Имя и телефон обетельны к заполению. Без имени и телефона кнопа добавить контакт будет заблокирована
+                                </md-tooltip>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+                    <form class="round" name="contact_form" id="contact_form">
+
+                        <div flex="5" hide-xs hide-sm>
+                            <!-- Spacer //-->
+                        </div>
+
+                        <div layout="row">
+
+                            <div flex>
+
+                                <div layout-gt-sm="column">
+
+                                    <div class="md-block" flex-gt-sm>
+                                        <i class="material-icons">person</i>
+
+                                        <md-input-container  class="md-icon-float md-block">
+                                            <!-- Use floating label instead of placeholder -->
+                                            <label for="username">Имя</label>
+                                            <input ng-model="user.name" ng-minlength="3" md-maxlength="55" id="username" name="username" type="text"  aria-label="name" required>
+                                            <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
+                                            <div ng-messages="user.name.$error" ng-if="!showHints">
+                                                <div ng-message="required">Name is required.</div>
+                                                <div ng-message="md-maxlength">The name has to be less than 55 characters long.</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+                                    <div flex="5" hide-xs hide-sm>
+                                        <!-- Spacer //-->
+                                    </div>
+
+                                    <div class="md-block" flex-gt-sm>
+                                        <i class="material-icons">contact_phone</i>
+                                        <md-input-container md-no-float class="md-block">
+                                            <label for="phone"> </label>
+                                            <input id="phone" ng-model="user.phone" ui-mask="+380(99)99-99-999" aria-label="phone" type="text" required>
+                                        </md-input-container>
+                                    </div>
+
+                                    <div flex="5" hide-xs hide-sm>
+                                        <!-- Spacer //-->
+                                    </div>
+
+                                    <md-input-container md-no-float class="md-block" flex-gt-sm>
+                                        <div class="md-block">
+                                            <i class="material-icons">wc</i>
+                                        </div>
+                                        <label>Пол</label>
+                                        <md-select name="favoriteColor" ng-model="user.sex">
+                                            <md-option value="Не вибрано">Не выбрано</md-option>
+                                            <md-option value="Мужчина">Мужчина</md-option>
+                                            <md-option value="Женщина">Женщина</md-option>
+                                        </md-select>
+                                    </md-input-container>
+
+                                    <div flex="5" hide-xs hide-sm>
+                                        <!-- Spacer //-->
+                                    </div>
+
+                                    <div layout-gt-sm="row">
+
+                                        <md-input-container md-no-float class="md-block" flex-gt-sm>
+
+                                            <div class="md-block">
+                                                <i class="material-icons">assignment_late</i>
+                                            </div>
+
+                                            <md-checkbox ng-model="user.blacklist" name="userban" aria-label="Черный список">
+                                                Черний список
+                                            </md-checkbox>
+
+                                        </md-input-container>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div flex="5" hide-xs hide-sm>
+                                <!-- Spacer //-->
+                            </div>
+
+                            <div flex>
+
+                                <div flow-init flow-name="file" flow-file-added="someHandlerMethod( $file, $event, $flow )" layout="column">
+
+                                    <div flex>
+
+                                        <div class="md-block" flex-gt-sm>
+                                            <md-button flow-btn flow-attrs="{accept:'image/*'}" ng-hide="$flow.files.length" class="md-fab md-primary" aria-label="Upload contact image"><i class="material-icons vertical-align">add_a_photo</i></md-button>
+                                            <md-button ng-show="$flow.files.length" ng-click="$flow.cancel()" flow-btn  class="md-fab" aria-label="Remove contact image"><i class="material-icons vertical-align">highlight_off</i></md-button>
+                                            <md-button ng-disabled="!contact_form.$valid" ng-click="addUser()" class="md-fab md-primary"><i class="material-icons vertical-align">person_add</i></md-button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div flex>
+
+                                        <div class="md-block" flex-gt-sm>
+                                            <div class="photo-preview">
+                                                <!--<img ng-src="{{user.photo}}" class="photo-placeholder">-->
+                                                <img id="photo" flow-img="$flow.files[0]" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div><!--.form-wrapper-->
+
+                <div flex="5" hide-xs hide-sm>
+                    <!-- Spacer //-->
+                </div>
+
+                <div class="table-wrapper" flex>
+
+                    <div class="md-block round">
+
+                        <md-toolbar class="md-hue-2">
+                            <div class="md-toolbar-tools">
+                                <md-button class="md-fab md-warn">
+                                    <i class="material-icons vertical-align">format_list_bulleted</i>
+                                </md-button>
+                                <h2>
+                                    <span>Контакты</span>
+                                </h2>
+                                <span flex></span>
+                                <md-button class="md-fab md-warn">
+                                    <!--Подсказка-->
+                                    <i class="material-icons vertical-align">help_outline</i>
+                                    <md-tooltip md-direction="bottom">
+                                        Контакти можно сортировать по клику на заголовок колонки
+                                    </md-tooltip>
+                                </md-button>
+                            </div>
+                        </md-toolbar>
+
+                        <table class="full-width table-contacts table-animate-container">
+                            <tr class="table-head">
+                                <th ng-click="setSort('photo')">Фото</th>
+                                <th ng-click="setSort('name')">Имя</th>
+                                <th ng-click="setSort('phone')">Телефон</th>
+                                <th ng-click="setSort('sex')">Пол</th>
+                                <th ng-click="setSort('blacklist')">Черний список</th>
+                            </tr>
+                            <tr class="table-row animate-repeat" ng-repeat="user in users | orderBy: sortBy">
+                                <td><img ng-src="{{user.photo}}"></td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.phone}}</td>
+                                <td>{{user.sex}}</td>
+                                <td>
+                                    <md-button class="md-fab md-primary" aria-label="In black list">
+                                        <i class="material-icons vertical-align">{{user.blacklist}}</i>
+                                    </md-button>
+                                    <md-button ng-click="removeUser($index)" class="md-fab" aria-label="Remove contact">
+                                        <i class="material-icons vertical-align">delete_forever</i>
+                                    </md-button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div><!--.table-wrapper-->
+
+            </div><!--.row-->
+
+        </div><!--.md-no-momentum-->
+
+    </md-content>
+
+</div>
